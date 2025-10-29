@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# hay un conflicto no sabe desde dónde cargar el código de React 
+index-v0.html
