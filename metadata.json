@@ -1,0 +1,5 @@
+{
+  "name": "Herramientas Estadísticas de Tesis",
+  "description": "Una aplicación web interactiva que visualiza las herramientas y procedimientos estadísticos utilizados en una tesis doctoral. Permite explorar un flujograma desde la preparación de datos hasta el análisis del tamaño del efecto.",
+  "requestFramePermissions": []
+}
