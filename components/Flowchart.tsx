@@ -68,7 +68,7 @@ const Flowchart: React.FC<FlowchartProps> = ({ data, onNodeClick }) => {
         };
 
         // Use a timeout to ensure layout is stable after initial render
-        const timeoutId = setTimeout(calculatePositions, 50);
+        const timeoutId = setTimeout(calculatePositions, 100);
         window.addEventListener('resize', calculatePositions);
         return () => {
             clearTimeout(timeoutId);
@@ -91,13 +91,20 @@ const Flowchart: React.FC<FlowchartProps> = ({ data, onNodeClick }) => {
             </h2>
             <div className="flex flex-col items-center gap-4">
               {section.nodes.map((row, rowIndex) => (
-                <div key={rowIndex} className="flex flex-wrap justify-center gap-4 w-full">
+                <div key={rowIndex} className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full items-start justify-items-center">
                   {row.map((node, nodeIndex) => {
-                    if (!node) return <div key={nodeIndex} className="flex-1" />; // Placeholder for empty grid cells
+                    if (!node) {
+                      // This placeholder is important for grid layout to keep other items in their correct columns.
+                      // We hide it on mobile and show it as an empty block on larger screens.
+                      return <div key={nodeIndex} className="hidden md:block" />;
+                    }
                     return (
                       <FlowchartNode
                         key={node.id}
-                        ref={el => nodeRefs.current[node.id] = el}
+                        ref={el => {
+                          // FIX: The ref callback was implicitly returning a value, which is not allowed. Changed to a block body to ensure it returns undefined.
+                          nodeRefs.current[node.id] = el;
+                        }}
                         node={node}
                         onClick={() => onNodeClick(node)}
                         colorClasses={colorClasses[section.color]}
